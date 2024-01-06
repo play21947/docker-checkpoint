@@ -10,7 +10,24 @@ app.get("/api/products", async(req, res)=>{
         return res.data
     })
 
-    res.send(products)
+    res.send({status: 200, ...products})
+})
+
+
+app.get("/api/products/:id", async(req, res)=>{
+
+    let {id} = req.params
+
+    let products = await axios.get(`https://fakestoreapi.com/products/${id}`).then((res)=>{
+        return res.data
+    })
+
+
+    if(id && products){
+        res.send({status: 200, ...products})
+    }else{
+        res.send({status: 400})
+    }
 })
 
 
